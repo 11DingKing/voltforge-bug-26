@@ -10,4 +10,9 @@ func (h *PowerSamplesHistory) Latest() (int, bool) {
 }
 func (h *PowerSamplesHistory) Count() int { h.mu.RLock(); defer h.mu.RUnlock(); return len(h.values) }
 
-func ExportPowerSamples(history *PowerSamplesHistory) []int { return history.Values() }
+func ExportPowerSamples(history *PowerSamplesHistory) []int {
+	values := history.Values()
+	out := make([]int, len(values))
+	copy(out, values)
+	return out
+}

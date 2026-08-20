@@ -12,4 +12,10 @@ func (h *PowerSamplesHistory) Add(value int) {
 	h.values = append(h.values, value)
 	h.mu.Unlock()
 }
-func (h *PowerSamplesHistory) Values() []int { h.mu.RLock(); defer h.mu.RUnlock(); return h.values }
+func (h *PowerSamplesHistory) Values() []int {
+	h.mu.RLock()
+	defer h.mu.RUnlock()
+	out := make([]int, len(h.values))
+	copy(out, h.values)
+	return out
+}
